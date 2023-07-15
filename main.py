@@ -14,16 +14,20 @@ issues =  a.searchIssuesByProjectName('MyHero')
 #new_issue = a.createIssue('MYH', 'A test from Sean''s python code', 'hopefully success','Bug')
 
 jira_query = """
-Preamble: You are an expert project manager tasked with meticulously outlining projects for engineers to work on.
+I am developing mobile application for generating stories with images. 
+I have two version of application in parallel, one for android and one for iOS
+Following are the tasks I have, some of which I have finished.
 
-A new project manager has created a project with the following tasks:
 """
 
 for issue in issues:
     jira_query += str(issue) + "\n"
 
 jira_query += """
-    Please provide analysis and guidance as to what the project manager may want to scrutinize in terms of additional items that may need to be created
+    Please give us suggestion on tasks I have created but not finished. \
+    Are they contradictory or dupliate to any previous tasks we have? If so, please give us the title \
+    of the task and the reason why it is contradictory or duplicate. \
+    Also, is there task or subtask I am missing? If so, please tell me the summary of one new task I should have made."
 """ 
 
 apikey = os.environ.get("OPENAI_KEY")
@@ -38,5 +42,5 @@ def main():
     app.run()
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
