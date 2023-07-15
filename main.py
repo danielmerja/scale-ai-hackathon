@@ -6,7 +6,8 @@ load_dotenv()
 
 # Create Jira Instance, select issue, and add a new issue.
 a = Jira()
-test =  a.searchIssueByUniqueId('MYH-1')
+issues =  a.searchIssuesByProjectName('MyHero')
+test =  a.searchIssueByUniqueId('MYH-9')
 new_issue = a.createIssue('MYH', 'A test from Sean''s python code', 'hopefully success','Bug')
 
 

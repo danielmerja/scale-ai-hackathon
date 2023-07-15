@@ -37,10 +37,12 @@ class Jira(object):
 
     def searchIssuesByProjectName(self, projectName: str) -> List:
         retList = []
-        for issue in self.jira_connection(kql_str='project = ' + projectName):
-            retList.append({ issue.key, issue.fields.summary, issue.fields.reporter.displayName})
+        for issue in self.jira_connection.search_issues('project=' + projectName):
+            retList.append({ issue.key, issue.fields.summary, issue.fields.description})
         return retList
 
     def searchIssueByUniqueId(self, Id: str) -> List:
         issue = self.jira_connection.issue(Id)
+        json_issue = issue.raw
+        print(json_issue)
         return {issue.key, issue.fields.summary, issue.fields.reporter.displayName}

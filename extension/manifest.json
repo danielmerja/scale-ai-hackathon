@@ -4,20 +4,23 @@
   "version": "1.0",
   "description": "Project Manager tips and review powered by AI.",
   "permissions": [
+    "sidePanel",
     "activeTab",
     "scripting",
     "downloads",
     "tabs"
   ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "action": {
+    "default_title": "Click to open panel"
+  },
   "host_permissions": [
     "http://localhost:5000/*"
   ],
   "background": {
     "service_worker": "service-worker.js"
-  },
-  "action": {
-    "default_popup": "popup.html",
-    "default_title": "Project Manager AI"
   },
   "content_scripts": [
     {
