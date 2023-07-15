@@ -28,7 +28,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
 
-    if (request.action === 'sendchat' || request.action === 'sendpage') {
+    if (request.action === 'sendchat' || request.action === 'sendpage' || request.action === 'analyze') {
         fetch('http://127.0.0.1:5000/' + request.action, {
             method: 'POST',
             headers: {

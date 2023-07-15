@@ -2,6 +2,7 @@ const messageContainer = document.getElementById("message-container");
 const userInput = document.getElementById("user-input");
 const sendChat = document.getElementById("send-chat");
 const sendPageButton = document.getElementById("send-page");
+const analyzeButton = document.getElementById("analyze");
 
 
 sendPageButton.onclick = async function (e) {
@@ -42,4 +43,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
+
+    analyzeButton.addEventListener("click", function () {
+        chrome.runtime.sendMessage({ action: "analyze" }, function (response) {
+            if (response) {
+                messageContainer.innerHTML += `<p>${response.reply}</p>`;
+            }
+        });
+    });
+
+
 });
