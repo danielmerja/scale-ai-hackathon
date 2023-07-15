@@ -38,7 +38,10 @@ class Jira(object):
     def searchIssuesByProjectName(self, projectName: str) -> List:
         retList = []
         for issue in self.jira_connection.search_issues('project=' + projectName):
-            retList.append({ issue.key, issue.fields.summary, issue.fields.description})
+            parent = None
+            if hasattr(issue.fields, 'parent'):
+                parent = issue.fields.parent.key
+            retList.append({ 'key':issue.key, 'parent':parent, 'status':issue.fields.status.name, 'summary':issue.fields.summary, 'description':issue.fields.description})
         return retList
 
     def searchIssueByUniqueId(self, Id: str) -> List:
