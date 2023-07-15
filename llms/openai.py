@@ -58,21 +58,14 @@ class openaif():
         attempt = 1
         while attempt < 3:
             try:
-                if self.functions == []:
-                    res = self.openai.ChatCompletion.create(
-                    model=self.model,
-                    temperature=self.temperature, 
-                    messages=self.messages,
-                    )
-                else:
-                    res = self.openai.ChatCompletion.create(
-                    model=self.model,
-                    temperature=self.temperature, 
-                    messages=self.messages,
-                    functions=self.functions.to_json()
-                    )
+                res = self.openai.ChatCompletion.create(
+                model=self.model,
+                temperature=self.temperature, 
+                messages=self.messages,
+                )
             except Exception as e:
                 #wait one second and try again
+                print(e)
                 attempt += 1
                 time.sleep(1)
                 continue
