@@ -1,10 +1,7 @@
 import os
 from api import app
-from dotenv import load_dotenv
 from atlassian.jira import Jira
-from llms.openai import openaif
 
-load_dotenv()
 
 # Create Jira Instance, select issue, and add a new issue.
 #a = Jira()
