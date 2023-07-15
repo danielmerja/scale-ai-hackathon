@@ -2,13 +2,11 @@ import openai
 import json
 import importlib
 from typing import List
-#from .chat import functions
-#from .calls import *
 import time
 
 class openaif():
     # To initialize, you'll need to pass your API key and list of functions.  You can change your model if you are using gpt4
-    def __init__(self, api_key: str, functions: functions=[], messages: List=[]):
+    def __init__(self, api_key: str, messages: List=[]):
         self.api_key = api_key
         self.openai = openai
         self.model = 'gpt-3.5-turbo-0613'  # gpt-4-0613
@@ -17,7 +15,6 @@ class openaif():
         self.temperature = 0  #note: people have noticed chatGPT not including required parameters.  Setting temperature to 0 seems to fix that
         self.maximum_function_content_char_size = 2000 #to prevent token overflow
         self.messages = messages
-        self.functions = functions
         self.infinite_loop_counter = 0  #don't want to burn through too many openai credits :-)
 
 
@@ -48,12 +45,12 @@ class openaif():
                         #TODO:  LOG ERRONEOUS FUNCTION CALL MESSAGE TO UNAUTHORIZED_ACCESS
         return res['choices'][0]['message']['content']
 
-    def function_call(self, function:str, function_response:str):
-        self.messages.append({"role": "function", "name": function, "content": function_response})
-        res = self.call_openai()
-        if res['choices'][0]['message']:
-            self.messages.append(res['choices'][0]['message'])
-        return res
+    # def function_call(self, function:str, function_response:str):
+    #     self.messages.append({"role": "function", "name": function, "content": function_response})
+    #     res = self.call_openai()
+    #     if res['choices'][0]['message']:
+    #         self.messages.append(res['choices'][0]['message'])
+    #     return res
 
     def call_openai(self)->str:
         # We seem to get a lot of "System Overloaded" from chatGPT.  This will try 3 times otherwise return message.
@@ -61,21 +58,14 @@ class openaif():
         attempt = 1
         while attempt < 3:
             try:
-                if self.functions == []:
-                    res = self.openai.ChatCompletion.create(
-                    model=self.model,
-                    temperature=self.temperature, 
-                    messages=self.messages,
-                    )
-                else:
-                    res = self.openai.ChatCompletion.create(
-                    model=self.model,
-                    temperature=self.temperature, 
-                    messages=self.messages,
-                    functions=self.functions.to_json()
-                    )
+                res = self.openai.ChatCompletion.create(
+                model=self.model,
+                temperature=self.temperature, 
+                messages=self.messages,
+                )
             except Exception as e:
                 #wait one second and try again
+                print(e)
                 attempt += 1
                 time.sleep(1)
                 continue
