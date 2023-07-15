@@ -1,0 +1,34 @@
+{
+  "manifest_version": 3,
+  "name": "Project Manager AI",
+  "version": "1.0",
+  "description": "Project Manager tips and review powered by AI.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "downloads",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://localhost:5000/*"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Project Manager AI"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "http://*/*", "https://*/*" ],
+      "js": [ "content-script.js" ]
+    }
+  ],
+
+  "icons": {
+    "16": "ai.png",
+    "48": "ai.png",
+    "128": "ai.png"
+  }
+}
