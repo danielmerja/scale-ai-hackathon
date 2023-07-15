@@ -6,22 +6,16 @@ from typing import Dict, List
 #    http://pythonjira.com/create-a-jira-ticket-with-python/
 #    https://datageeks.medium.com/automate-your-jira-tasks-in-python-bbbcb3145a95
 
-class JiraBase(object):
-        def __init__(self): 
-            jira_workspace_email = os.environ.get("JIRA_WORKSPACE_EMAIL")
+class Jira(object):
+    def __init__(self): 
+            jira_email = os.environ.get("JIRA_EMAIL")
             jira_api_token = os.environ.get("JIRA_API_TOKEN")
             jira_server = os.environ.get("JIRA_SERVER")
-            self.jira_connection = JIRA(
-            basic_auth=(jira_workspace_email, jira_api_token),
-            server=jira_server)
+            options =  {'server': jira_server}
+            self.jira_connection = JIRA(options, basic_auth=(jira_email, jira_api_token))
 
 
-class Jira(JiraBase):
-    def __init__(self):
-        JiraBase.__init__(self)
-
-
-    def createIssue(self, projectId: str, summary: str, description: str, issuetype: str) -> JIRA.new_issue:
+    def createIssue(self, projectId: str, summary: str, description: str, issuetype: str):
 
         #issue_dict = {
         #    'project': {'key': 'PJH'},
