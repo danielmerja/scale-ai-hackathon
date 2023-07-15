@@ -9,7 +9,8 @@ class openaif():
     def __init__(self, api_key: str, messages: List=[]):
         self.api_key = api_key
         self.openai = openai
-        self.model = 'gpt-3.5-turbo-0613'  # gpt-4-0613
+        # self.model = 'gpt-3.5-turbo-0613'  # gpt-4-0613
+        self.model = 'gpt-4-0613'
         self.openai.api_key = self.api_key
         self.openai.Engine.list()['data'][0]  # will throw an error if invalid key
         self.temperature = 0  #note: people have noticed chatGPT not including required parameters.  Setting temperature to 0 seems to fix that

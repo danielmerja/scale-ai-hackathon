@@ -46,9 +46,11 @@ def collect_tasks():
 def ask_ai(tasks):
     open_ai = openaif(api_key=os.getenv('OPENAI_API_KEY'))
     # Analyze Prompt
-    prompt = f"Here are the tasks we have created: {tasks}, and please give us suggestion on a new task.\
+    project = "I am developing mobile application for generating stories with images. I have two version of application in parallel, one for android and one for iOS. "
+    prompt = f"I am working on a project: {project}. Here are the tasks we have created: {tasks}, and please give us suggestion on a new task.\
         Is it contradictory or dupliate to any previous task we have? If so, please give us the title \
-        of the task and the reason why it is contradictory or duplicate."
+        of the task and the reason why it is contradictory or duplicate. \
+        Also, is there task or subtask I am missing? If so, please tell me the summary of one new task I should have made."
     return open_ai.user_request(prompt)
 
 # For testing

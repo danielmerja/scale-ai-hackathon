@@ -50,5 +50,5 @@ class Jira(object):
     def searchIssueByUniqueId(self, Id: str) -> List:
         issue = self.jira_connection.issue(Id)
         json_issue = issue.raw
-        print(json_issue)
+        # print(json_issue)
         return {issue.key, issue.fields.summary, issue.fields.reporter.displayName}
