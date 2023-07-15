@@ -4,8 +4,15 @@ from flask import Flask, request, jsonify
 import logging
 from atlassian.jira import Jira
 from llms.openai import openaif
+from dotenv import load_dotenv
 
 app = Flask(__name__) 
+load_dotenv()
+api_key=os.environ.get('OPENAI_KEY')
+open_ai = openaif(api_key, messages=[{
+        "role": "system",
+        "content": " You are an expert project manager tasked with meticulously outlining projects for engineers to work on."
+    },])
 
 #@app.route("/", defaults={"path": "index.html"})
 #@app.route("/<path:path>")
@@ -42,11 +49,6 @@ def sendpage():
 
 
 def ask_ai(tasks):
-    api_key=os.environ.get('OPENAI_KEY')
-    open_ai = openaif(api_key, messages=[{
-        "role": "system",
-        "content": " You are an expert project manager tasked with meticulously outlining projects for engineers to work on."
-    },])
     prompt = """
         I am developing mobile application for generating stories with images. 
         I have two version of application in parallel, one for android and one for iOS
@@ -59,4 +61,5 @@ def ask_ai(tasks):
         of the task and the reason why it is contradictory or duplicate.
         Also, is there task or subtask I am missing? If so, please tell me the summary of one new task I should have made. \nYour entire response should be in HTML format. "
     """
+    print(len(open_ai.messages))
     return open_ai.user_request(prompt)

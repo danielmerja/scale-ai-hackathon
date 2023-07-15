@@ -49,6 +49,8 @@ class openaif():
     def user_request(self, prompt:str)-> str:
         self.messages.append({"role": "user", "content": prompt})
         res = self.call_openai()
+        if res is str:
+            return res
         if res['choices'][0]['message']:
             self.messages.append(res['choices'][0]['message'])
             while res['choices'][0]['finish_reason'] == 'function_call':
