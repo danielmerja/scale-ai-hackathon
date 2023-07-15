@@ -14,7 +14,6 @@ load_dotenv()
 
 jira_query = """
 Preamble: You are an expert project manager tasked with meticulously outlining projects for engineers to work on.
-
 A new project manager has created a project with the following tasks:
 """
 
