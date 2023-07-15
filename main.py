@@ -30,6 +30,7 @@ jira_query += """
     Also, is there task or subtask I am missing? If so, please tell me the summary of one new task I should have made."
 """ 
 
+# system_message = 
 apikey = os.environ.get("OPENAI_KEY")
 chat = openaif(apikey)
 response = chat.user_request(jira_query)
