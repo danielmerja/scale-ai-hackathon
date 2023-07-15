@@ -1,1 +1,1 @@
-# hackathon-test
+# Scale AI hackathon project (aka Trakly)
