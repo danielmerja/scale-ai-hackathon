@@ -39,9 +39,12 @@ class Jira(object):
         retList = []
         for issue in self.jira_connection.search_issues('project=' + projectName):
             parent = None
+            acceptance_criteria=None
             if hasattr(issue.fields, 'parent'):
                 parent = issue.fields.parent.key
-            retList.append({ 'key':issue.key, 'parent':parent, 'status':issue.fields.status.name, 'summary':issue.fields.summary, 'description':issue.fields.description})
+            if hasattr(issue.fields, 'customfield_10036'):
+                acceptance_criteria = issue.fields.customfield_10036
+            retList.append({ 'key':issue.key, 'parent':parent, 'status':issue.fields.status.name, 'summary':issue.fields.summary, 'description':issue.fields.description, 'acceptance_criteria': acceptance_criteria})
         return retList
 
     def searchIssueByUniqueId(self, Id: str) -> List:

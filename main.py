@@ -1,6 +1,8 @@
+import os
 from api import app
 from dotenv import load_dotenv
 from atlassian.jira import Jira
+from llms.openai import openaif
 
 
 load_dotenv()
@@ -11,6 +13,24 @@ test =  a.searchIssueByUniqueId('MYH-9')
 issues =  a.searchIssuesByProjectName('MyHero')
 #new_issue = a.createIssue('MYH', 'A test from Sean''s python code', 'hopefully success','Bug')
 
+jira_query = """
+Preamble: You are an expert project manager tasked with meticulously outlining projects for engineers to work on.
+
+A new project manager has created a project with the following tasks:
+"""
+
+for issue in issues:
+    jira_query += str(issue) + "\n"
+
+jira_query += """
+    Please provide analysis and guidance as to what the project manager may want to scrutinize in terms of additional items that may need to be created
+""" 
+
+apikey = os.environ.get("OPENAI_KEY")
+chat = openaif(apikey)
+response = chat.user_request(jira_query)
+
+print(response)
 
 
 
