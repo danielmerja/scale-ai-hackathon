@@ -27,6 +27,7 @@ def analyze():
     a = Jira()
     issues =  a.searchIssuesByProjectName('MyHero')
     answer = ask_ai(issues)
+    print(answer)
     return {"reply": answer}
 
 

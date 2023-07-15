@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
     analyzeButton.addEventListener("click", function () {
         chrome.runtime.sendMessage({ action: "analyze" }, function (response) {
             if (response) {
-                messageContainer.innerHTML += `<p>${response.reply}</p>`;
+                messageContainer.innerHTML = `<p>${response.reply}</p>`;
             }
         });
     });
