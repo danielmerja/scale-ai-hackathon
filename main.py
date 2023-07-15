@@ -8,7 +8,7 @@ load_dotenv()
 a = Jira()
 issues =  a.searchIssuesByProjectName('MyHero')
 test =  a.searchIssueByUniqueId('MYH-9')
-new_issue = a.createIssue('MYH', 'A test from Sean''s python code', 'hopefully success','Bug')
+#new_issue = a.createIssue('MYH', 'A test from Sean''s python code', 'hopefully success','Bug')
 
 
 def main():

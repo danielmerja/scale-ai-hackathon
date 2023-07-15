@@ -1,14 +1,15 @@
-const GOOGLE_ORIGIN = 'https://*.atlassian.net';
+const URL_ORIGIN = 'https://trakly.atlassian.net';
 
-chrome.sidePanel
-    .setPanelBehavior({ openPanelOnActionClick: true })
-    .catch((error) => console.error(error));
+//chrome.sidePanel
+//    .setPanelBehavior({ openPanelOnActionClick: true })
+ //   .catch((error) => console.error(error));
 
 chrome.tabs.onUpdated.addListener(async (tabId, info, tab) => {
     if (!tab.url) return;
     const url = new URL(tab.url);
     // Enables the side panel on google.com
-    if (url.origin === GOOGLE_ORIGIN) {
+    if (url.origin === URL_ORIGIN) {
+        console.log(url.origin);
         await chrome.sidePanel.setOptions({
             tabId,
             path: 'sidepanel.html',
