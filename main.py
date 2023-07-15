@@ -12,16 +12,10 @@ load_dotenv()
 #issues =  a.searchIssuesByProjectName('MyHero')
 #new_issue = a.createIssue('MYH', 'A test from Sean''s python code', 'hopefully success','Bug')
 
-jira_query = """
-Preamble: You are an expert project manager tasked with meticulously outlining projects for engineers to work on.
-A new project manager has created a project with the following tasks:
-"""
+open_ai = openaif(os.environ.get('OPENAI_KEY'))
+res = open_ai.user_request("create a Jira task in the MYH project to enable a user to upload an image on their IOS cellphone.")
 
-
-jira_query += """
-    Please provide analysis and guidance as to what the project manager may want to scrutinize in terms of additional items that may need to be created
-""" 
-
+print(res)
 def main():
     app.run()
 

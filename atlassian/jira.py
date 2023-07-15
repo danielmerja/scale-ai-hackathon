@@ -15,21 +15,13 @@ class Jira(object):
             self.jira_connection = JIRA(options, basic_auth=(jira_email, jira_api_token))
 
 
-    def createIssue(self, projectId: str, summary: str, description: str, issuetype: str):
-
-        #issue_dict = {
-        #    'project': {'key': 'PJH'},
-        #    'summary': 'Testing issue from Python Jira Handbook',
-        #    'description': 'Detailed ticket description.',
-        #    'issuetype': {'name': 'Bug'},
-        #}
-
+    def create_issue(self, project_key: str, issue_type: str, summary: str, description: str):
 
         issue_dict = {
-            'project': {'key': projectId},
+            'project': {'key': project_key},
             'summary': summary,
             'description': description,
-            'issuetype': {'name': issuetype},
+            'issuetype': {'name': issue_type},
         }
 
         new_issue = self.jira_connection.create_issue(fields=issue_dict)
