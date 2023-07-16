@@ -28,7 +28,6 @@
       "js": [ "content-script.js" ]
     }
   ],
-
   "icons": {
     "16": "ai.png",
     "48": "ai.png",
