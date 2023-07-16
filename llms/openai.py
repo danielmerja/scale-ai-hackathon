@@ -6,6 +6,7 @@ import time
 
 def truncate_to_word_limit(s, limit):
     words = s.split()
+    print(len(words))
 
     if len(words) <= limit:
         return s
@@ -18,7 +19,7 @@ class openaif():
     def __init__(self, api_key: str, messages: List=[]):
         self.api_key = api_key
         self.openai = openai
-        self.model = 'gpt-4-0613' 
+        self.model = 'gpt-3.5-turbo-0613' 
         self.openai.api_key = self.api_key
         self.openai.Engine.list()['data'][0]  # will throw an error if invalid key
         self.temperature = 0  #note: people have noticed chatGPT not including required parameters.  Setting temperature to 0 seems to fix that
@@ -56,9 +57,10 @@ class openaif():
         self.messages = []
 
     def user_request(self, prompt:str)-> str:
-        prompt = truncate_to_word_limit(prompt, 8190)
+        # prompt = truncate_to_word_limit(prompt, 8190)
         self.messages.append({"role": "user", "content": prompt})
         res = self.call_openai()
+        print(res)
         if  isinstance(res, str):
             return res
         if res['choices'][0]['message']:
