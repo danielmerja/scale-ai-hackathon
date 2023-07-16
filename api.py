@@ -50,7 +50,7 @@ def ask_ai(tasks):
         Please give us suggestion on tasks I have created but not finished.
         Are they contradictory or duplicate to any previous tasks we have? If so, please give us the title
         of the task and the reason why it is contradictory or duplicate.
-        Also, is there task or subtask I am missing? If so, please tell me the summary of one new task I should have made. \nYour entire response should be in HTML format. "
+        Also, is there task or subtask I am missing? If so, please tell me the summary of one new task I should have made. \nYour entire response should be in HTML format, and under no circumstances should your response contain function definitions.. "
     """
     print(len(open_ai.messages))
     return open_ai.user_request(prompt)
