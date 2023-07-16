@@ -9,7 +9,7 @@ class openaif():
     def __init__(self, api_key: str, messages: List=[]):
         self.api_key = api_key
         self.openai = openai
-        self.model = 'gpt-3.5-turbo-0613' 
+        self.model = 'gpt-4-0613' 
         self.openai.api_key = self.api_key
         self.openai.Engine.list()['data'][0]  # will throw an error if invalid key
         self.temperature = 0  #note: people have noticed chatGPT not including required parameters.  Setting temperature to 0 seems to fix that
@@ -60,16 +60,16 @@ class openaif():
                     # As mentioned, security is always a concern when allowing a 3rd party system to execute functions on your servers!!!
                     # This call assures that you've at least passed these functions to chatGPT.  
                     # You should also consider scrubbing the parameters to prevent SQL or other injections!
-                    if function_name in self.functions:
-                        function_args = json.loads(res['choices'][0]['message']['function_call']['arguments'])
-                        module = importlib.import_module('.', package='atlassian.jira')
-                        funct = getattr(module, function_name)
-                        function_response = str(funct(**function_args))  #responses must be string in order to append to messages
-                        if len(function_response) > self.maximum_function_content_char_size: function_response = function_response[:self.maximum_function_content_char_size]
-                        res = self.function_call(function_name, function_response)
-                    else:
-                        self.messages.append({"role": "function", "name": function, "content": 'I am sorry but I am not able to access that information.'})
-                        #TODO:  LOG ERRONEOUS FUNCTION CALL MESSAGE TO UNAUTHORIZED_ACCESS
+
+                    function_args = json.loads(res['choices'][0]['message']['function_call']['arguments'])
+                    #module = importlib.import_module('.', package='atlassian.jira')
+                    cls = getattr(importlib.import_module('atlassian.jira'), 'Jira')
+                    obj = cls()
+                    funct = getattr(obj, function_name)
+                    function_response = str(funct(**function_args))  #responses must be string in order to append to messages
+                    if len(function_response) > self.maximum_function_content_char_size: function_response = function_response[:self.maximum_function_content_char_size]
+                    res = self.function_call(function_name, function_response)
+                  
         return res['choices'][0]['message']['content']
 
     def function_call(self, function:str, function_response:str):
@@ -96,7 +96,7 @@ class openaif():
                     model=self.model,
                     temperature=self.temperature, 
                     messages=self.messages,
-                    functions=self.functions.to_json()
+                    functions=self.functions
                     )
 
             except Exception as e:
