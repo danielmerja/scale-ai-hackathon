@@ -25,7 +25,8 @@ open_ai = openaif(api_key, messages=[{
 @app.route("/sendchat", methods=["POST", "GET"])
 def chat():
     message = request.json["message"]
-    return {"reply": "Message Received!" + message}
+    answer = open_ai.user_request(message)
+    return {"reply": answer}
 
 
 # message / reply format
@@ -36,16 +37,6 @@ def analyze():
     answer = ask_ai(issues)
     print(answer)
     return {"reply": answer}
-
-
-@app.route("/sendpage", methods=["POST", "GET"])
-def sendpage():
-    doc = request.json["message"]
-    url = doc['url']
-    title = doc['title']
-    body = doc['body']
-
-    return {"reply": "Analysis Complete!"}
 
 
 def ask_ai(tasks):
@@ -63,3 +54,4 @@ def ask_ai(tasks):
     """
     print(len(open_ai.messages))
     return open_ai.user_request(prompt)
+
