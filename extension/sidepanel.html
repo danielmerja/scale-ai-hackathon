@@ -2,45 +2,71 @@
 <html>
   <head>
     <title>Trakly AI</title>
+    <!-- Meta tags for character set and responsive design -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- Link to Bootstrap CSS for responsive styling -->
     <link
       href="templates/cdn.jsdelivr.net_npm_bootstrap@5.3.0_dist_css_bootstrap.min.css"
       rel="stylesheet"
     />
+
+    <!-- Link to Bootstrap JS for responsive features -->
     <script src="templates/cdn.jsdelivr.net_npm_bootstrap@5.3.0_dist_js_bootstrap.bundle.min.js"></script>
+
+    <!-- CSS styles for the page -->
     <style>
+      /* Body styling to create flex layout, padding, and background color */
       body {
         border: 0px solid black;
         background-color: #faf5ff;
-        padding: 5px 3px;
+        padding: 0;
+        margin: 0;
         display: flex;
         flex-direction: column;
         height: 100vh;
-        margin: 0;
-        position: relative;
       }
+      /* Style for the top bar - it is fixed to always stay on top */
       #top-bar {
-        margin-bottom: 10px;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background-color: #faf5ff;
+        z-index: 100;
       }
+      /* Style for the form control on focus event */
       .form-control:focus {
         border-color: #9e2222;
       }
+      /* Styles for the chatbox, including padding on top to prevent overlap */
       #chatbox {
+        padding-top: 60px; /* to prevent overlap with the top bar */
+        margin-bottom: 80px;
         overflow-y: auto;
         flex-grow: 1;
-        margin-bottom: 80px;
       }
+      /* Style for the input placeholder at the bottom of the screen */
       #input-placeholder {
         position: fixed;
         bottom: 0;
         left: 0;
         width: 100%;
-        background: #faf5ff;
+        background-color: #faf5ff;
+        z-index: 100;
+      }
+      /* Style for the chat responses */
+      .chat-response {
+        padding: 10px;
+        margin: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #fff;
       }
     </style>
   </head>
   <body>
+    <!-- Top bar with logo and analyze button -->
     <div id="top-bar" style="border: 0px">
       <img src="ai.png" style="width: 40px; vertical-align: middle" />
       <h2
@@ -55,13 +81,13 @@
       >
         Trakly AI&nbsp;&nbsp;
       </h2>
-      <button id="analyze" display:inline; class="btn btn-danger">
-        Review project
-      </button>
+      <button id="analyze" class="btn btn-danger">Review project</button>
     </div>
 
+    <!-- Div for chatbox where messages will be displayed -->
     <div id="chatbox" class="d-flex align-items-start flex-column"></div>
 
+    <!-- Input placeholder for user input -->
     <div id="input-placeholder" class="p-1">
       <div class="input-group mb-3">
         <input
@@ -80,8 +106,18 @@
       </div>
     </div>
 
+    <!-- Container for messages -->
     <div id="message-container" class="p-1"></div>
 
+    <!-- Script for popup functionality -->
     <script src="popup.js"></script>
+
+    <!-- JavaScript for handling "analyze" button click -->
+    <script>
+      document.getElementById("analyze").addEventListener("click", function () {
+        document.getElementById("chatbox").innerHTML +=
+          '<div class="chat-response">Please wait while I review the project...</div>';
+      });
+    </script>
   </body>
 </html>
