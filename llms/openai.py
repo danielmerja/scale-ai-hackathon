@@ -4,6 +4,15 @@ import importlib
 from typing import List
 import time
 
+def truncate_to_word_limit(s, limit):
+    words = s.split()
+
+    if len(words) <= limit:
+        return s
+    else:
+        return ' '.join(words[:limit])
+
+
 class openaif():
     # To initialize, you'll need to pass your API key and list of functions.  You can change your model if you are using gpt4
     def __init__(self, api_key: str, messages: List=[]):
@@ -47,9 +56,10 @@ class openaif():
         self.messages = []
 
     def user_request(self, prompt:str)-> str:
+        prompt = truncate_to_word_limit(prompt, 8190)
         self.messages.append({"role": "user", "content": prompt})
         res = self.call_openai()
-        if res is str:
+        if  isinstance(res, str):
             return res
         if res['choices'][0]['message']:
             self.messages.append(res['choices'][0]['message'])
