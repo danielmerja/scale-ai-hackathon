@@ -24,7 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
         chrome.runtime.sendMessage({ action: 'openpanel' });
          chrome.runtime.sendMessage({ action: "sendchat", message }, function (response) {
              if (response) {
-                messageContainer.innerHTML += `<p><strong>Server response:</strong> ${response.reply}</p>`;
+                messageContainer.innerHTML += `<p><strong>AI:</strong> ${response.reply}</p>`;
             }
         });
     }
