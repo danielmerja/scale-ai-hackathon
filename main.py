@@ -12,7 +12,6 @@ from atlassian.jira import Jira
 #open_ai = openaif(os.environ.get('OPENAI_KEY'))
 #res = open_ai.user_request("create a Jira task in the MYH project to enable a user to upload an image on their IOS cellphone.")
 
-print(res)
 def main():
     app.run()
 
